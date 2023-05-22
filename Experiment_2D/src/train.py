@@ -26,17 +26,17 @@ def main():
                                    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])}
 
     # data_root = os.path.abspath(os.path.join(os.getcwd(), ".."))  # get data root path
-    data_root = "/content/drive/MyDrive/Code-2D"
+    data_root = "../"
     # image_path = os.path.join(data_root, "/realData-abs")  # flower data set path
-    image_path = "/content/drive/MyDrive/Code-2D/realData-real"
+    image_path = "../set"
     assert os.path.exists(image_path), "{} path does not exist.".format(image_path)
     train_dataset = datasets.ImageFolder(root=os.path.join(image_path, "train"),
                                          transform=data_transform["train"])
     train_num = len(train_dataset)
 
-    # {'daisy':0, 'dandelion':1, 'roses':2, 'sunflower':3, 'tulips':4}
+    # {'ZSTP':0, 'HSSP':1, 'SZP':2, 'SPZF':3, 'DLJMB':4, 'ZLJMB':5, 'JSTBTY':6}
     flower_list = train_dataset.class_to_idx
-    cla_dict = dict((val, key) for key, val in flower_list.items())  # 将键值反过来变成 daisy 0
+    cla_dict = dict((val, key) for key, val in flower_list.items())  # 将键值反过来变成 ZSTP 0
     # write dict into json file
     json_str = json.dumps(cla_dict, indent=4)
     with open('class_indices.json', 'w') as json_file:
@@ -76,11 +76,11 @@ def main():
     net.to(device)
     loss_function = nn.CrossEntropyLoss()
     # pata = list(net.parameters())
-    optimizer = optim.Adam(net.parameters(), lr=0.0002)
+    # optimizer = optim.Adam(net.parameters(), lr=0.0002)
     optimizer = optim.SGD(net.parameters(), lr=0.0027, momentum=0.9)
 
     epochs = 40
-    save_path = '/content/drive/MyDrive/Code-2D/AlexNet-test.pth'
+    save_path = '../test.pth'
     best_acc = 0.0
     train_steps = len(train_loader)
     for epoch in range(epochs):
